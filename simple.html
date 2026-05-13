@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+        }
+        /* Ball */
+        
+        .ball {
+            width: 80px;
+            height: 80px;
+            background: cyan;
+            border-radius: 50%;
+            animation: bounce 10s infinite alternate;
+        }
+        /* Bounce Animation */
+        
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-200px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ball"></div>
+
+</body>
+
+</html>
