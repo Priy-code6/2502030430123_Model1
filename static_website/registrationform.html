@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+      background:#020617;
+      position:relative;
+    }
+
+    /* Animated Neon Background */
+
+    .bg{
+      position:absolute;
+      width:700px;
+      height:700px;
+      background:conic-gradient(
+        #00f2ff,
+        #0066ff,
+        #8b5cf6,
+        #ff00ff,
+        #00f2ff
+      );
+      filter:blur(130px);
+      border-radius:50%;
+      animation:rotate 12s linear infinite;
+    }
+
+    @keyframes rotate{
+      100%{
+        transform:rotate(360deg);
+      }
+    }
+
+    /* Glass Card */
+
+    .container{
+      width:950px;
+      height:620px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1);
+      backdrop-filter:blur(20px);
+      border-radius:30px;
+      overflow:hidden;
+      display:flex;
+      position:relative;
+      z-index:2;
+      box-shadow:0 0 40px rgba(0,0,0,0.4);
+    }
+
+    /* Left Section */
+
+    .left{
+      width:45%;
+      background:rgba(255,255,255,0.03);
+      padding:60px;
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      position:relative;
+    }
+
+    .left h1{
+      font-size:52px;
+      line-height:1.1;
+      margin-bottom:20px;
+    }
+
+    .left p{
+      color:#cbd5e1;
+      line-height:1.8;
+      font-size:15px;
+    }
+
+    .glow-circle{
+      position:absolute;
+      width:120px;
+      height:120px;
+      background:rgba(255,255,255,0.05);
+      border-radius:50%;
+      top:40px;
+      right:40px;
+      animation:float 5s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      50%{
+        transform:translateY(-20px);
+      }
+    }
+
+    /* Right Section */
+
+    .right{
+      width:55%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .form-box{
+      width:80%;
+      position:absolute;
+      transition:0.6s ease;
+      color:white;
+    }
+
+    .register{
+      transform:translateX(0);
+      opacity:1;
+    }
+
+    .login{
+      transform:translateX(120%);
+      opacity:0;
+    }
+
+    .container.active .register{
+      transform:translateX(-120%);
+      opacity:0;
+    }
+
+    .container.active .login{
+      transform:translateX(0);
+      opacity:1;
+    }
+
+    .form-box h2{
+      text-align:center;
+      font-size:34px;
+      margin-bottom:25px;
+    }
+
+    .input-box{
+      margin:15px 0;
+    }
+
+    .input-box input,
+    .input-box select{
+      width:100%;
+      padding:15px;
+      border:none;
+      outline:none;
+      border-radius:14px;
+      background:rgba(255, 255, 255, 0.822);
+      color:white(243, 4, 171);
+      font-size:15px;
+      transition:0.3s;
+    }
+
+    .input-box input:focus,
+    .input-box select:focus{
+      background:rgba(3, 40, 247, 0.733);
+      box-shadow:0 0 15px #0aeeee;
+    }
+
+    input::placeholder{
+      color:#d1d5db;
+    }
+
+    select{
+      color:#d1d5db;
+    }
+
+    option{
+      color:rgb(223, 177, 27);
+    }
+
+    .row{
+      display:flex;
+      gap:15px;
+    }
+
+    .btn{
+      width:100%;
+      padding:15px;
+      margin-top:15px;
+      border:none;
+      border-radius:14px;
+      background:linear-gradient(90deg,#00f2ff,#7c3aed);
+      color:rgb(26, 11, 233);
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 10px 25px rgba(214, 211, 51, 0.35);
+    }
+
+    .switch{
+      text-align:center;
+      margin-top:18px;
+      color:#cbd5e1;
+      font-size:14px;
+    }
+
+    .switch span{
+      color:#e71c27;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    /* Mobile Responsive */
+
+    @media(max-width:900px){
+
+      .container{
+        width:95%;
+        height:auto;
+        flex-direction:column;
+      }
+
+      .left{
+        width:100%;
+        padding:40px 25px;
+        text-align:center;
+      }
+
+      .right{
+        width:100%;
+        padding:30px 0;
+      }
+
+      .form-box{
+        width:88%;
+        position:relative;
+      }
+
+      .row{
+        flex-direction:column;
+      }
+
+      .login{
+        display:none;
+      }
+
+      .container.active .register{
+        display:none;
+      }
+
+      .container.active .login{
+        display:block;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="bg"></div>
+
+  <div class="container" id="container">
+
+    <!-- LEFT CONTENT -->
+
+    <div class="left">
+
+      <div class="glow-circle"></div>
+
+      <h1>create<br>your account</h1>
+
+      <p>
+        Registration Form.
+      </p>
+
+    </div>
+
+    <!-- RIGHT CONTENT -->
+
+    <div class="right">
+
+      <!-- REGISTER FORM -->
+
+      <div class="form-box register">
+
+        <h2>Create Account</h2>
+
+        <div class="input-box">
+          <input type="text" placeholder="Full Name">
+        </div>
+
+        <div class="row">
+
+          <div class="input-box">
+            <select>
+              <option>Select Gender</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="input-box">
+            <input type="date">
+          </div>
+
+        </div>
+
+        <div class="input-box">
+          <input type="tel" placeholder="Mobile Number">
+        </div>
+        <div class="input-box upload-box">
+  <label>Upload Resume</label>
+  <input type="file">
+  
+</div>
+        <div class="input-box">
+          <input type="email" placeholder="Email Address">
+        </div>
+
+        <div class="input-box">
+          <input type="password" placeholder="Create Password">
+        </div>
+
+        <button class="btn">Register</button>
+
+        <div class="switch">
+          Already have an account?
+          <span onclick="toggleForm()">Login</span>
+        </div>
+
+      </div>
+
+      <!-- LOGIN FORM -->
+
+      <div class="form-box login">
+
+        <h2>Welcome Back</h2>
+
+        <div class="input-box">
+          <input type="email" placeholder="Email Address">
+        </div>
+
+        <div class="input-box">
+          <input type="password" placeholder="Password">
+        </div>
+
+        <button class="btn">Login</button>
+
+        <div class="switch">
+          Don't have an account?
+          <span onclick="toggleForm()">Register</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const container = document.getElementById("container");
+
+    function toggleForm(){
+      container.classList.toggle("active");
+    }
+
+  </script>
+
+</body>
+</html>
