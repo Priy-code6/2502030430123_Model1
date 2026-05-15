@@ -1,0 +1,1 @@
+console.log("Luxury Fashion Store Loaded Successfully");

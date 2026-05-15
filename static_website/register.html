@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<script>
+
+function registerUser(){
+
+  alert("Registration Successful!");
+
+  window.location.href = "login.html";
+
+}
+
+</script>
+<body>
+
+  <!-- Navbar -->
+
+  <nav>
+
+    <div class="logo">LUXE</div>
+
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- Register Form -->
+
+  <div class="form-container">
+
+    <div class="form-box">
+
+      <h2>Create Account</h2>
+
+      <input type="text" placeholder="Full Name">
+
+      <input type="email" placeholder="Email Address">
+
+      <input type="password" placeholder="Create Password">
+
+      <input type="password" placeholder="Confirm Password">
+
+      <button>Register</button>
+
+      <p style="text-align:center; margin-top:20px;">
+        Already have an account?
+        <a href="login.html" style="color:#f5c542;">
+          Login
+        </a>
+      </p>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
