@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashionista– Luxury Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --black: #0a0a0a;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a0;
+    --dark-brown: #1a1207;
+    --warm-gray: #8a8278;
+    --border: rgba(201,168,76,0.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Montserrat',sans-serif; background:var(--cream); color:var(--black); overflow-x:hidden; }
+
+  /* PAGE SYSTEM */
+  .page { display:none; min-height:100vh; }
+  .page.active { display:block; animation: fadeIn 0.5s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 4rem; height:72px;
+    background:rgba(245,240,232,0.95); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo {
+    font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:600;
+    letter-spacing:0.15em; color:var(--black); cursor:pointer;
+  }
+  .nav-logo span { color:var(--gold); }
+  .nav-links { display:flex; gap:2rem; align-items:center; }
+  .nav-links a {
+    font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--black); text-decoration:none; cursor:pointer;
+    transition:color 0.3s; position:relative; padding-bottom:4px;
+  }
+  .nav-links a::after {
+    content:''; position:absolute; bottom:0; left:0; width:0; height:1px;
+    background:var(--gold); transition:width 0.3s;
+  }
+  .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+  .nav-icons { display:flex; gap:1.2rem; align-items:center; }
+  .nav-icons button {
+    background:none; border:none; cursor:pointer; font-size:1.1rem;
+    color:var(--black); transition:color 0.3s; position:relative;
+  }
+  .nav-icons button:hover { color:var(--gold); }
+  .cart-badge {
+    position:absolute; top:-6px; right:-6px;
+    background:var(--gold); color:white; border-radius:50%;
+    width:16px; height:16px; font-size:0.55rem; display:flex;
+    align-items:center; justify-content:center; font-weight:600;
+  }
+
+  /* HERO */
+  .hero {
+    height:100vh; display:grid; grid-template-columns:1fr 1fr;
+    padding-top:72px; overflow:hidden;
+  }
+  .hero-left {
+    display:flex; flex-direction:column; justify-content:center;
+    padding:6rem 4rem 4rem 6rem;
+    background:linear-gradient(135deg,#f5f0e8 0%,#ede7d9 100%);
+  }
+  .hero-tag {
+    font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:1.5rem;
+  }
+  .hero-title {
+    font-family:'Cormorant Garamond',serif; font-size:5rem; line-height:1.05;
+    font-weight:300; margin-bottom:1.5rem;
+  }
+  .hero-title em { font-style:italic; color:var(--gold); }
+  .hero-desc { color:var(--warm-gray); font-size:0.82rem; line-height:1.8; max-width:380px; margin-bottom:3rem; }
+  .btn-primary {
+    display:inline-flex; align-items:center; gap:1rem;
+    background:var(--black); color:var(--cream); padding:1rem 2.5rem;
+    font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase;
+    border:none; cursor:pointer; transition:all 0.3s; text-decoration:none;
+  }
+  .btn-primary:hover { background:var(--gold); }
+  .btn-outline {
+    display:inline-flex; align-items:center; gap:0.8rem;
+    background:transparent; color:var(--black); padding:1rem 2.5rem;
+    font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase;
+    border:1px solid var(--black); cursor:pointer; transition:all 0.3s;
+    font-family:'Montserrat',sans-serif;
+  }
+  .btn-outline:hover { background:var(--black); color:var(--cream); }
+  .hero-right {
+    background:var(--dark-brown); display:flex; align-items:center;
+    justify-content:center; position:relative; overflow:hidden;
+  }
+  .hero-right::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.15) 0%, transparent 60%);
+  }
+  .hero-model {
+    width:100%; height:100%; object-fit:cover; opacity:0.85;
+  }
+  .hero-model-placeholder {
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:1rem; color:rgba(201,168,76,0.6);
+  }
+  .hero-model-placeholder .big-icon { font-size:8rem; opacity:0.3; }
+  .hero-model-placeholder p { font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; }
+
+  /* MARQUEE */
+  .marquee-bar {
+    background:var(--black); color:var(--gold); padding:0.8rem 0;
+    overflow:hidden; white-space:nowrap;
+  }
+  .marquee-inner {
+    display:inline-block;
+    animation:marquee 20s linear infinite;
+    font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase;
+  }
+  @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* SECTION TITLES */
+  .section { padding:6rem 6rem; }
+  .section-header { text-align:center; margin-bottom:4rem; }
+  .section-tag { font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
+  .section-title { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; }
+  .section-title em { font-style:italic; color:var(--gold); }
+  .divider { width:60px; height:1px; background:var(--gold); margin:1.5rem auto; }
+
+  /* PRODUCTS GRID */
+  .products-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; }
+  .product-card {
+    background:#fff; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;
+    position:relative; overflow:hidden;
+  }
+  .product-card:hover { transform:translateY(-8px); box-shadow:0 20px 40px rgba(0,0,0,0.12); }
+  .product-img {
+    aspect-ratio:3/4; background:linear-gradient(135deg,#e8e0d0,#d4c9b0);
+    display:flex; align-items:center; justify-content:center;
+    font-size:4rem; color:rgba(201,168,76,0.5); position:relative; overflow:hidden;
+  }
+  .product-img::before {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5));
+    opacity:0; transition:opacity 0.3s;
+  }
+  .product-card:hover .product-img::before { opacity:1; }
+  .product-badge {
+    position:absolute; top:1rem; left:1rem;
+    background:var(--gold); color:white; padding:0.3rem 0.8rem;
+    font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase;
+  }
+  .product-add-btn {
+    position:absolute; bottom:1rem; left:50%; transform:translateX(-50%) translateY(20px);
+    background:white; color:var(--black); padding:0.6rem 1.5rem;
+    font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase;
+    border:none; cursor:pointer; opacity:0; transition:all 0.3s; white-space:nowrap;
+    font-family:'Montserrat',sans-serif;
+  }
+  .product-card:hover .product-add-btn { opacity:1; transform:translateX(-50%) translateY(0); }
+  .product-add-btn:hover { background:var(--gold); color:white; }
+  .product-info { padding:1.2rem; }
+  .product-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; }
+  .product-cat { font-size:0.65rem; color:var(--warm-gray); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5rem; }
+  .product-price { font-size:0.9rem; font-weight:600; color:var(--gold); }
+  .product-price-orig { font-size:0.75rem; color:var(--warm-gray); text-decoration:line-through; margin-left:0.5rem; }
+
+  /* FEATURES */
+  .features-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; text-align:center; }
+  .feature-item { padding:2.5rem 1.5rem; background:#fff; border:1px solid var(--border); }
+  .feature-icon { font-size:2rem; margin-bottom:1rem; }
+  .feature-title { font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.5rem; }
+  .feature-desc { font-size:0.72rem; color:var(--warm-gray); line-height:1.7; }
+
+  /* ABOUT PAGE */
+  .about-hero {
+    height:50vh; background:var(--dark-brown); display:flex;
+    align-items:flex-end; padding:4rem 6rem; position:relative; overflow:hidden;
+  }
+  .about-hero::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.2), transparent 60%);
+  }
+  .about-hero-text { position:relative; z-index:1; }
+  .about-hero-text .section-tag { margin-bottom:0.5rem; }
+  .about-hero-text h1 {
+    font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300;
+    color:var(--cream); line-height:1.1;
+  }
+  .about-content { display:grid; grid-template-columns:1fr 1fr; gap:6rem; padding:6rem; }
+  .about-story p { font-size:0.85rem; line-height:2; color:var(--warm-gray); margin-bottom:1.5rem; }
+  .about-story h2 { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:300; margin-bottom:2rem; }
+  .about-stats { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+  .stat-item { padding:2rem; background:var(--black); color:var(--cream); text-align:center; }
+  .stat-num { font-family:'Cormorant Garamond',serif; font-size:3rem; color:var(--gold); }
+  .stat-label { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; margin-top:0.3rem; color:var(--warm-gray); }
+  .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; padding:0 6rem 6rem; }
+  .team-card { text-align:center; }
+  .team-photo {
+    aspect-ratio:3/4; background:linear-gradient(135deg,#e8e0d0,#c8bea8);
+    display:flex; align-items:center; justify-content:center;
+    font-size:5rem; color:rgba(201,168,76,0.4); margin-bottom:1.2rem;
+  }
+  .team-name { font-family:'Cormorant Garamond',serif; font-size:1.3rem; }
+  .team-role { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-top:0.3rem; }
+
+  /* AUTH PAGES */
+  .auth-container {
+    min-height:100vh; display:grid; grid-template-columns:1fr 1fr; padding-top:72px;
+  }
+  .auth-left {
+    background:var(--dark-brown); display:flex; align-items:center; justify-content:center;
+    padding:4rem; position:relative; overflow:hidden;
+  }
+  .auth-left::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse at 40% 60%, rgba(201,168,76,0.2), transparent 60%);
+  }
+  .auth-art { position:relative; z-index:1; text-align:center; }
+  .auth-art .big-letter {
+    font-family:'Cormorant Garamond',serif; font-size:20rem; font-weight:600;
+    color:rgba(201,168,76,0.1); line-height:1; user-select:none;
+  }
+  .auth-art p {
+    font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:rgba(201,168,76,0.6); margin-top:-3rem; position:relative; z-index:1;
+  }
+  .auth-right {
+    display:flex; align-items:center; justify-content:center;
+    padding:4rem; background:var(--cream);
+  }
+  .auth-form-box { width:100%; max-width:420px; }
+  .auth-form-box h2 { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; margin-bottom:0.5rem; }
+  .auth-form-box p { font-size:0.78rem; color:var(--warm-gray); margin-bottom:2.5rem; line-height:1.6; }
+  .form-group { margin-bottom:1.5rem; }
+  .form-group label { display:block; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--warm-gray); margin-bottom:0.6rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width:100%; padding:0.9rem 1rem; background:#fff;
+    border:1px solid rgba(0,0,0,0.15); font-family:'Montserrat',sans-serif;
+    font-size:0.82rem; color:var(--black); transition:border 0.3s; outline:none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--gold); }
+  .form-group textarea { resize:vertical; min-height:120px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .form-link { font-size:0.72rem; color:var(--warm-gray); text-align:center; margin-top:1.5rem; }
+  .form-link a { color:var(--gold); cursor:pointer; text-decoration:none; }
+  .form-link a:hover { text-decoration:underline; }
+  .btn-full { width:100%; padding:1rem; font-family:'Montserrat',sans-serif; }
+  .remember-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; }
+  .remember-row label { font-size:0.72rem; color:var(--warm-gray); display:flex; align-items:center; gap:0.5rem; cursor:pointer; }
+  .remember-row a { font-size:0.72rem; color:var(--gold); cursor:pointer; }
+
+  /* CONTACT */
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; padding:6rem; }
+  .contact-info h2 { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; margin-bottom:1.5rem; }
+  .contact-info p { font-size:0.82rem; color:var(--warm-gray); line-height:1.9; margin-bottom:2rem; }
+  .contact-detail { display:flex; gap:1rem; align-items:flex-start; margin-bottom:1.5rem; }
+  .contact-icon { font-size:1.2rem; color:var(--gold); margin-top:2px; }
+  .contact-text h4 { font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.3rem; }
+  .contact-text p { font-size:0.8rem; color:var(--warm-gray); line-height:1.6; margin:0; }
+  .map-placeholder {
+    background:linear-gradient(135deg,#e8e0d0,#d4c9b0); height:250px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:2rem; color:rgba(201,168,76,0.5); margin-top:2rem;
+    border:1px solid var(--border); font-family:'Cormorant Garamond',serif;
+    letter-spacing:0.1em;
+  }
+
+  /* CART */
+  .cart-container { padding:8rem 6rem 6rem; }
+  .cart-container h2 { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; margin-bottom:0.5rem; }
+  .cart-container p.subtitle { font-size:0.78rem; color:var(--warm-gray); margin-bottom:3rem; }
+  .cart-layout { display:grid; grid-template-columns:1fr 380px; gap:3rem; align-items:start; }
+  .cart-items { }
+  .cart-item {
+    display:grid; grid-template-columns:100px 1fr auto; gap:1.5rem;
+    padding:1.5rem 0; border-bottom:1px solid var(--border); align-items:center;
+  }
+  .cart-item-img {
+    aspect-ratio:3/4; background:linear-gradient(135deg,#e8e0d0,#d4c9b0);
+    display:flex; align-items:center; justify-content:center;
+    font-size:2rem; color:rgba(201,168,76,0.5);
+  }
+  .cart-item-info h4 { font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; }
+  .cart-item-info p { font-size:0.72rem; color:var(--warm-gray); margin-bottom:0.5rem; }
+  .cart-item-info .price { font-size:0.9rem; font-weight:600; color:var(--gold); }
+  .qty-control { display:flex; align-items:center; gap:0.8rem; margin-top:0.8rem; }
+  .qty-btn {
+    width:28px; height:28px; border:1px solid var(--border); background:#fff;
+    cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s;
+  }
+  .qty-btn:hover { background:var(--black); color:white; border-color:var(--black); }
+  .qty-val { font-size:0.85rem; font-weight:600; min-width:20px; text-align:center; }
+  .remove-btn { background:none; border:none; cursor:pointer; color:var(--warm-gray); font-size:1.2rem; transition:color 0.2s; }
+  .remove-btn:hover { color:#c0392b; }
+  .cart-summary {
+    background:var(--black); color:var(--cream); padding:2.5rem; position:sticky; top:100px;
+  }
+  .cart-summary h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; margin-bottom:2rem; }
+  .summary-row { display:flex; justify-content:space-between; margin-bottom:1rem; font-size:0.78rem; }
+  .summary-row.total { border-top:1px solid rgba(255,255,255,0.15); padding-top:1rem; margin-top:1rem; font-size:0.9rem; font-weight:600; color:var(--gold); }
+  .promo-row { display:flex; gap:0.5rem; margin:1.5rem 0; }
+  .promo-input {
+    flex:1; padding:0.7rem 1rem; background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2); color:white; font-family:'Montserrat',sans-serif;
+    font-size:0.75rem; outline:none;
+  }
+  .promo-btn {
+    padding:0.7rem 1rem; background:var(--gold); color:white; border:none;
+    cursor:pointer; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase;
+    font-family:'Montserrat',sans-serif;
+  }
+  .empty-cart { text-align:center; padding:6rem 2rem; }
+  .empty-cart .icon { font-size:5rem; opacity:0.2; margin-bottom:1.5rem; }
+  .empty-cart h3 { font-family:'Cormorant Garamond',serif; font-size:2rem; margin-bottom:0.5rem; }
+  .empty-cart p { color:var(--warm-gray); margin-bottom:2rem; font-size:0.82rem; }
+
+  /* BILLING / CHECKOUT */
+  .billing-container { padding:8rem 6rem 6rem; }
+  .billing-container h2 { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; margin-bottom:3rem; }
+  .billing-layout { display:grid; grid-template-columns:1fr 400px; gap:3rem; align-items:start; }
+  .billing-steps { display:flex; gap:2rem; margin-bottom:3rem; }
+  .step {
+    display:flex; align-items:center; gap:0.8rem;
+    font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--warm-gray);
+  }
+  .step-num {
+    width:28px; height:28px; border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; font-size:0.7rem;
+  }
+  .step.active { color:var(--black); }
+  .step.active .step-num { background:var(--gold); border-color:var(--gold); color:white; }
+  .step.done .step-num { background:var(--black); border-color:var(--black); color:white; }
+  .step-line { width:40px; height:1px; background:var(--border); }
+  .billing-section { margin-bottom:2.5rem; }
+  .billing-section h3 { font-family:'Cormorant Garamond',serif; font-size:1.3rem; margin-bottom:1.5rem; padding-bottom:0.8rem; border-bottom:1px solid var(--border); }
+  .payment-options { display:flex; gap:1rem; margin-bottom:1.5rem; }
+  .pay-opt {
+    flex:1; padding:1rem; border:1px solid var(--border); cursor:pointer;
+    text-align:center; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase;
+    transition:all 0.2s; background:#fff;
+  }
+  .pay-opt.selected { border-color:var(--gold); background:rgba(201,168,76,0.08); }
+  .pay-opt .pay-icon { font-size:1.5rem; margin-bottom:0.5rem; }
+  .order-summary-box { background:var(--black); color:var(--cream); padding:2.5rem; position:sticky; top:100px; }
+  .order-summary-box h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; margin-bottom:2rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem; }
+  .order-item { display:flex; justify-content:space-between; font-size:0.78rem; margin-bottom:0.8rem; }
+  .order-item span:first-child { color:rgba(255,255,255,0.7); }
+  .bill-breakdown { margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.1); }
+  .bill-row { display:flex; justify-content:space-between; font-size:0.78rem; margin-bottom:0.8rem; }
+  .bill-row.discount { color:#7ed56f; }
+  .bill-row.tax { color:rgba(255,255,255,0.6); }
+  .bill-row.grand-total { border-top:1px solid rgba(255,255,255,0.15); padding-top:1rem; margin-top:0.5rem; font-size:1rem; font-weight:600; color:var(--gold); }
+
+  /* INVOICE / RECEIPT */
+  .invoice-box {
+    background:#fff; padding:3rem; border:1px solid var(--border);
+    max-width:700px; margin:0 auto;
+  }
+  .invoice-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:3rem; }
+  .invoice-logo { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:600; }
+  .invoice-logo span { color:var(--gold); }
+  .invoice-meta { text-align:right; }
+  .invoice-meta h2 { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--gold); margin-bottom:0.3rem; }
+  .invoice-meta p { font-size:0.72rem; color:var(--warm-gray); }
+  .invoice-info { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:2rem; padding-bottom:2rem; border-bottom:2px solid var(--black); }
+  .invoice-info h4 { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem; }
+  .invoice-info p { font-size:0.8rem; line-height:1.7; color:var(--warm-gray); }
+  .invoice-table { width:100%; border-collapse:collapse; margin-bottom:2rem; }
+  .invoice-table th { background:var(--black); color:var(--cream); padding:0.8rem 1rem; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; text-align:left; }
+  .invoice-table td { padding:1rem; font-size:0.8rem; border-bottom:1px solid var(--border); }
+  .invoice-table tr:last-child td { border-bottom:none; }
+  .invoice-totals { margin-left:auto; width:280px; }
+  .inv-row { display:flex; justify-content:space-between; padding:0.5rem 0; font-size:0.8rem; }
+  .inv-row.grand { border-top:2px solid var(--black); padding-top:1rem; font-weight:600; font-size:1rem; color:var(--gold); }
+  .invoice-footer { margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border); text-align:center; }
+  .invoice-footer p { font-size:0.72rem; color:var(--warm-gray); line-height:1.7; }
+  .success-overlay {
+    text-align:center; padding:4rem 2rem;
+  }
+  .success-icon { font-size:4rem; margin-bottom:1.5rem; }
+  .success-overlay h2 { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; margin-bottom:0.5rem; }
+  .success-overlay p { font-size:0.82rem; color:var(--warm-gray); margin-bottom:2rem; }
+
+  /* PRODUCTS PAGE */
+  .products-page-header {
+    padding:8rem 6rem 3rem; background:var(--dark-brown); color:var(--cream);
+    position:relative; overflow:hidden;
+  }
+  .products-page-header::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse at 80% 50%, rgba(201,168,76,0.15), transparent 60%);
+  }
+  .products-page-header h1 { font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; position:relative; }
+  .filter-bar {
+    padding:1.5rem 6rem; display:flex; align-items:center; gap:1.5rem;
+    background:#fff; border-bottom:1px solid var(--border); flex-wrap:wrap;
+  }
+  .filter-btn {
+    padding:0.5rem 1.2rem; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase;
+    border:1px solid var(--border); background:#fff; cursor:pointer; transition:all 0.2s;
+    font-family:'Montserrat',sans-serif;
+  }
+  .filter-btn.active, .filter-btn:hover { background:var(--black); color:white; border-color:var(--black); }
+  .products-full { padding:3rem 6rem 6rem; }
+  .products-full .products-grid { grid-template-columns:repeat(3,1fr); }
+
+  /* TOAST */
+  .toast {
+    position:fixed; bottom:2rem; right:2rem; background:var(--black); color:var(--cream);
+    padding:1rem 1.8rem; font-size:0.75rem; letter-spacing:0.1em; z-index:9999;
+    transform:translateY(100px); transition:transform 0.3s; border-left:3px solid var(--gold);
+  }
+  .toast.show { transform:translateY(0); }
+
+  /* FOOTER */
+  footer {
+    background:var(--dark-brown); color:var(--cream); padding:4rem 6rem 2rem;
+  }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:4rem; margin-bottom:3rem; }
+  .footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:600; margin-bottom:1rem; }
+  .footer-logo span { color:var(--gold); }
+  .footer-desc { font-size:0.75rem; color:rgba(255,255,255,0.5); line-height:1.8; margin-bottom:1.5rem; }
+  .footer-socials { display:flex; gap:0.8rem; }
+  .social-btn {
+    width:36px; height:36px; border:1px solid rgba(255,255,255,0.2);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:all 0.2s; font-size:0.9rem;
+  }
+  .social-btn:hover { background:var(--gold); border-color:var(--gold); }
+  .footer-col h4 { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:1.2rem; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.8rem; }
+  .footer-col ul li a {
+    font-size:0.75rem; color:rgba(255,255,255,0.5); text-decoration:none; cursor:pointer; transition:color 0.2s;
+  }
+  .footer-col ul li a:hover { color:var(--gold); }
+  .footer-bottom { border-top:1px solid rgba(255,255,255,0.1); padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; }
+  .footer-bottom p { font-size:0.68rem; color:rgba(255,255,255,0.3); }
+
+  /* RESPONSIVE UTILITY */
+  @media(max-width:900px) {
+    nav { padding:0 2rem; }
+    .hero { grid-template-columns:1fr; }
+    .hero-right { display:none; }
+    .section { padding:4rem 2rem; }
+    .products-grid { grid-template-columns:1fr 1fr; }
+    .features-grid { grid-template-columns:1fr 1fr; }
+    .auth-container { grid-template-columns:1fr; }
+    .auth-left { display:none; }
+    .cart-layout, .billing-layout { grid-template-columns:1fr; }
+    .footer-grid { grid-template-columns:1fr 1fr; }
+    .about-content { grid-template-columns:1fr; }
+    .products-full .products-grid { grid-template-columns:1fr 1fr; }
+    .filter-bar { padding:1rem 2rem; }
+    .products-full, .billing-container, .cart-container { padding:6rem 2rem 3rem; }
+    .products-page-header { padding:6rem 2rem 2rem; }
+    .contact-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">NOOR <span>VASTRA</span></div>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
+    <a onclick="showPage('products')" id="nav-products">Products</a>
+    <a onclick="showPage('about')" id="nav-about">About</a>
+    <a onclick="showPage('contact')" id="nav-contact">Contact</a>
+  </div>
+  <div class="nav-icons">
+    <button onclick="showPage('cart')" title="Cart">
+      🛍️
+      <span class="cart-badge" id="cart-badge">0</span>
+    </button>
+    <button onclick="showPage('login')" title="Account" id="auth-btn">👤</button>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ HOME PAGE ============ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">✦ New Collection 2026</p>
+      <h1 class="hero-title">Dress for Your<br><em>Finest Moments</em></h1>
+      <p class="hero-desc">Crafted with intention, worn with confidence. Discover luxury fashion that speaks before you do — timeless silhouettes, rare fabrics, artisan finishing.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <button class="btn-primary" onclick="showPage('products')">Explore Collection →</button>
+        <button class="btn-outline" onclick="showPage('about')">Our Story</button>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-model-placeholder">
+        <div class="big-icon">👗</div>
+        <p>Spring / Summer 2026</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-bar">
+    <div class="marquee-inner">
+      ✦ FREE SHIPPING ON ORDERS ABOVE ₹5,000 &nbsp;&nbsp;&nbsp; ✦ NEW ARRIVALS EVERY FRIDAY &nbsp;&nbsp;&nbsp; ✦ LUXURY FASHION, DELIVERED TO YOUR DOOR &nbsp;&nbsp;&nbsp; ✦ USE CODE ELITE15 FOR 15% OFF &nbsp;&nbsp;&nbsp; ✦ FREE SHIPPING ON ORDERS ABOVE ₹5,000 &nbsp;&nbsp;&nbsp; ✦ NEW ARRIVALS EVERY FRIDAY &nbsp;&nbsp;&nbsp; ✦ LUXURY FASHION, DELIVERED TO YOUR DOOR &nbsp;&nbsp;&nbsp; ✦ USE CODE ELITE15 FOR 15% OFF &nbsp;&nbsp;&nbsp;
+    </div>
+  </div>
+
+  <section class="section" style="background:#fff">
+    <div class="section-header">
+      <p class="section-tag">✦ Curated Picks</p>
+      <h2 class="section-title">Featured <em>Pieces</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="products-grid" id="home-products"></div>
+    <div style="text-align:center;margin-top:3rem">
+      <button class="btn-outline" onclick="showPage('products')">View All Products</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <p class="section-tag">✦ Why Choose Us</p>
+      <h2 class="section-title">The Maison <em>Promise</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">🚚</div>
+        <h3 class="feature-title">Free Shipping</h3>
+        <p class="feature-desc">Complimentary delivery on all orders above ₹5,000. Express options available.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">↩️</div>
+        <h3 class="feature-title">Easy Returns</h3>
+        <p class="feature-desc">30-day hassle-free return policy. No questions asked.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔒</div>
+        <h3 class="feature-title">Secure Payment</h3>
+        <p class="feature-desc">Bank-grade encryption. Your financial data stays private.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💎</div>
+        <h3 class="feature-title">Premium Quality</h3>
+        <p class="feature-desc">Each piece is crafted from the finest materials, ethically sourced.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">NOOR <span>VASTRA</span></div>
+        <p class="footer-desc">Where luxury meets everyday elegance. Discover fashion that tells your story without uttering a word.</p>
+        <div class="footer-socials">
+          <div class="social-btn">𝕏</div>
+          <div class="social-btn">📸</div>
+          <div class="social-btn">in</div>
+          <div class="social-btn">▶</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a onclick="showPage('products')">New Arrivals</a></li>
+          <li><a onclick="showPage('products')">Women</a></li>
+          <li><a onclick="showPage('products')">Men</a></li>
+          <li><a onclick="showPage('products')">Accessories</a></li>
+          <li><a onclick="showPage('products')">Sale</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+          <li><a>Careers</a></li>
+          <li><a>Press</a></li>
+          <li><a>Sustainability</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a>Size Guide</a></li>
+          <li><a>Shipping Info</a></li>
+          <li><a>Returns</a></li>
+          <li><a>FAQ</a></li>
+          <li><a>Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Noor Vastra. All rights reserved.</p>
+      <p>Crafted with ♥ for fashion lovers</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ ABOUT PAGE ============ -->
+<div class="page" id="page-about">
+  <div class="about-hero" style="padding-top:72px">
+    <div class="about-hero-text">
+      <p class="section-tag">✦ Our Story</p>
+      <h1>Born from Passion,<br>Refined by Craft</h1>
+    </div>
+  </div>
+  <div class="about-content">
+    <div class="about-story">
+      <h2>A Legacy of <em>Elegance</em></h2>
+      <p>Founded with a passion for timeless elegance and modern tradition, Noor Vastra began as the singular dream of Priyanka Kadam — a fashion-obsessed visionary who believed that luxury shouldn't be a privilege, but a feeling accessible to those who dare to define their own standard of beauty.</p>
+      <p>What began as a dream to bring graceful, luxurious designs to every wardrobe has grown into a fashion destination loved for its sophistication, craftsmanship, and individuality.</p>
+      <p>Our collections draw from a dialogue between Indian heritage and global contemporary design — rich textures meet clean silhouettes, vivid hues honour restraint, and every stitch carries the intention of artisans who treat their craft as sacred.</p>
+      <p>We believe a great outfit isn't just what you wear. It's what you carry with you — confidence, identity, and the silent authority of someone who knows exactly who they are.</p>
+      <button class="btn-primary" onclick="showPage('contact')">Get in Touch →</button>
+    </div>
+    <div>
+      <div class="about-stats">
+        <div class="stat-item"><div class="stat-num">18+</div><div class="stat-label">Years of craft</div></div>
+        <div class="stat-item"><div class="stat-num">120K</div><div class="stat-label">Happy customers</div></div>
+        <div class="stat-item"><div class="stat-num">800+</div><div class="stat-label">Products</div></div>
+        <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Cities</div></div>
+      </div>
+      <div style="background:var(--black);padding:2.5rem;margin-top:2rem;color:var(--cream)">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;line-height:1.6;color:var(--gold-light)">"Fashion is the armour to survive the reality of everyday life."</p>
+        <p style="font-size:0.72rem;color:var(--warm-gray);margin-top:1rem">— Priyanka Kadam, Founder & Creative Director</p>
+      </div>
+    </div>
+  </div>
+  <div style="padding:0 6rem 2rem"><div class="section-header"><p class="section-tag">✦ The Visionary</p><h2 class="section-title">The Face Behind <em>Maison</em></h2><div class="divider"></div></div></div>
+  <div style="display:flex;justify-content:center;padding:0 6rem 6rem">
+    <div style="text-align:center;max-width:420px">
+      <div class="team-photo" style="width:280px;height:370px;margin:0 auto 2rem;background:linear-gradient(135deg,#1a1207,#2e1f0a);display:flex;align-items:center;justify-content:center;font-size:8rem;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 40% 30%,rgba(201,168,76,0.18),transparent 60%)"></div>
+        <span style="position:relative;z-index:1">👸</span>
+      </div>
+      <div class="team-name" style="font-size:1.8rem">Priyanka Kadam</div>
+      <div class="team-role" style="font-size:0.75rem;margin-top:0.5rem">Founder, Creative Director & CEO</div>
+      <p style="font-size:0.82rem;color:var(--warm-gray);line-height:1.9;margin-top:1.5rem">Priyanka Kadam is the singular creative force and founder behind Noor Vastra.She built this brand from the ground up — turning a personal obsession with elevated Indian fashion into a movement that now reaches over 120,000 customers across the country. Every collection, every stitch, every campaign reflects her singular vision: that luxury must feel both timeless and deeply personal.</p>
+      <div style="width:40px;height:2px;background:var(--gold);margin:1.5rem auto"></div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--gold);">"I don't design clothes. I design confidence."</p>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-bottom" style="border-top:none">
+      <p>© 2026 Noor Vastra. All rights reserved.</p>
+      <p style="cursor:pointer;color:var(--gold)" onclick="showPage('home')">← Back to Home</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ LOGIN PAGE ============ -->
+<div class="page" id="page-login">
+  <div class="auth-container">
+    <div class="auth-left">
+      <div class="auth-art">
+        <div class="big-letter">M</div>
+        <p>Welcome back, fashionista</p>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <h2>Sign In</h2>
+        <p>Access your Noor Vastra account for exclusive benefits, order history, and personalised style.</p>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="login-email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="••••••••">
+        </div>
+        <div class="remember-row">
+          <label><input type="checkbox"> Remember me</label>
+          <a>Forgot password?</a>
+        </div>
+        <button class="btn-primary btn-full" onclick="doLogin()">Sign In →</button>
+        <p class="form-link">Don't have an account? <a onclick="showPage('register')">Create one</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REGISTER PAGE ============ -->
+<div class="page" id="page-register">
+  <div class="auth-container">
+    <div class="auth-left">
+      <div class="auth-art">
+        <div class="big-letter">N</div>
+        <p>Begin your journey with us</p>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <h2>Create Account</h2>
+        <p>Join the NOOR VASTRA family and unlock a world of curated luxury fashion.</p>
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Priyanka"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Kadam"></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@example.com"></div>
+        <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Password</label><input type="password" placeholder="Min 8 characters"></div>
+          <div class="form-group"><label>Confirm Password</label><input type="password" placeholder="Repeat password"></div>
+        </div>
+        <div class="form-group">
+          <label><input type="checkbox" style="margin-right:8px"> I agree to the <a style="color:var(--gold)">Terms & Conditions</a> and <a style="color:var(--gold)">Privacy Policy</a></label>
+        </div>
+        <button class="btn-primary btn-full" onclick="doRegister()">Create Account →</button>
+        <p class="form-link">Already have an account? <a onclick="showPage('login')">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTACT PAGE ============ -->
+<div class="page" id="page-contact">
+  <div style="padding-top:72px">
+    <div class="products-page-header">
+      <p class="section-tag" style="margin-bottom:0.5rem">✦ Reach Us</p>
+      <h1>Contact <em style="color:var(--gold)">Us</em></h1>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>We'd love to<br>hear from you</h2>
+        <p>Whether you have a styling question, need help with an order, or simply want to connect — our team is here for you. Expect a response within 24 hours.</p>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div class="contact-text"><h4>Visit Us</h4><p>42, Safal 3,<br>Ahmedabad, Gujarat 382475</p></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div class="contact-text"><h4>Call Us</h4><p>+91 22 4567 8900<br>Mon–Sat, 10am – 7pm</p></div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-text"><h4>Email Us</h4><p>hellonoorvastra.in<br>support@noorvastra.in</p></div>
+        </div>
+        <div class="map-placeholder">📍 Ahmedabad, India</div>
+      </div>
+      <div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;margin-bottom:1.5rem">Send a Message</h3>
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Your name"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Last name"></div>
+        </div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+        <div class="form-group"><label>Subject</label>
+          <select><option>General Inquiry</option><option>Order Support</option><option>Returns & Exchanges</option><option>Press & Partnerships</option></select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Tell us how we can help…"></textarea></div>
+        <button class="btn-primary" onclick="showToast('Message sent! We\'ll respond within 24 hours.')">Send Message →</button>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-bottom" style="border-top:none">
+      <p>© 2026 Noor Vastra. All rights reserved.</p>
+      <p style="cursor:pointer;color:var(--gold)" onclick="showPage('home')">← Back to Home</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ PRODUCTS PAGE ============ -->
+<div class="page" id="page-products">
+  <div class="products-page-header">
+    <p class="section-tag">✦ The Collection</p>
+    <h1>Our <em style="color:var(--gold)">Products</em></h1>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('all',this)">All</button>
+    <button class="filter-btn" onclick="filterProducts('women',this)">Women</button>
+    <button class="filter-btn" onclick="filterProducts('men',this)">Men</button>
+    <button class="filter-btn" onclick="filterProducts('accessories',this)">Accessories</button>
+    <button class="filter-btn" onclick="filterProducts('sale',this)">Sale</button>
+  </div>
+  <div class="products-full">
+    <div class="products-grid" id="products-grid"></div>
+  </div>
+  <footer>
+    <div class="footer-bottom" style="border-top:none">
+      <p>© 2026 Noor Vastra. All rights reserved.</p>
+      <p style="cursor:pointer;color:var(--gold)" onclick="showPage('home')">← Back to Home</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ CART PAGE ============ -->
+<div class="page" id="page-cart">
+  <div class="cart-container">
+    <h2>Your Cart</h2>
+    <p class="subtitle">Review your selections before checkout</p>
+    <div id="cart-content"></div>
+  </div>
+  <footer>
+    <div class="footer-bottom" style="border-top:none">
+      <p>© 2026 Noor Vastra. All rights reserved.</p>
+      <p style="cursor:pointer;color:var(--gold)" onclick="showPage('home')">← Back to Home</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ BILLING PAGE ============ -->
+<div class="page" id="page-billing">
+  <div class="billing-container" id="billing-content"></div>
+</div>
+
+<!-- ============ INVOICE PAGE ============ -->
+<div class="page" id="page-invoice">
+  <div style="padding:8rem 4rem 4rem;background:var(--cream)">
+    <div style="text-align:center;margin-bottom:2rem">
+      <p class="section-tag">✦ Order Confirmed</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300">Thank you for your order!</h2>
+    </div>
+    <div class="invoice-box" id="invoice-box"></div>
+    <div style="text-align:center;margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn-primary" onclick="window.print()">🖨️ Print Invoice</button>
+      <button class="btn-outline" onclick="showPage('home')">Continue Shopping →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============ DATA ============
+const PRODUCTS = [
+  { id:1, name:"Celestial Drape Saree", cat:"women", emoji:"🥻", price:2000, orig:3500, badge:"New", desc:"Pure silk with zari border" },
+  { id:2, name:"Noir Blazer Set", cat:"men", emoji:"🧥", price:12999, orig:16000, badge:"", desc:"Italian wool, slim fit" },
+  { id:3, name:"Golden Hour Kurta", cat:"women", emoji:"👘", price:4299, orig:6000, badge:"Sale", desc:"Hand-block printed cotton" },
+  { id:4, name:"Heritage Leather Tote", cat:"accessories", emoji:"👜", price:7999, orig:9500, badge:"", desc:"Genuine leather, hand-stitched" },
+  { id:5, name:"Ember Silk Blouse", cat:"women", emoji:"👚", price:3499, orig:4500, badge:"Sale", desc:"Mulberry silk, flowy cut" },
+  { id:6, name:"Onyx Formal Trousers", cat:"men", emoji:"👔", price:5999, orig:7200, badge:"", desc:"100% merino wool" },
+  { id:7, name:"Pearl Drop Earrings", cat:"accessories", emoji:"💎", price:2199, orig:0, badge:"New", desc:"South Sea pearl, gold clasp" },
+  { id:8, name:"Brocade Evening Jacket", cat:"women", emoji:"🧥", price:15999, orig:19000, badge:"Limited", desc:"Handwoven brocade silk" },
+  { id:9, name:"Cashmere Scarf", cat:"accessories", emoji:"🧤", price:3299, orig:4200, badge:"", desc:"Grade A Mongolian cashmere" },
+  { id:10, name:"Linen Bandhgala", cat:"men", emoji:"🥼", price:8999, orig:11500, badge:"New", desc:"Premium linen, 3-button" },
+  { id:11, name:"Ethnic Anklet Set", cat:"accessories", emoji:"✨", price:1299, orig:1800, badge:"Sale", desc:"Oxidised silver, handmade" },
+  { id:12, name:"Velvet Lehenga", cat:"women", emoji:"👒", price:24999, orig:32000, badge:"Limited", desc:"Raw silk velvet, embroidered" },
+];
+
+let cart = JSON.parse(localStorage.getItem('me_cart') || '[]');
+localStorage.removeItem('me_cart');
+let loggedIn = JSON.parse(localStorage.getItem('me_loggedin') || 'false');
+let currentUser = JSON.parse(localStorage.getItem('me_user') || '{}');
+
+function saveCart() { localStorage.setItem('me_cart', JSON.stringify(cart)); updateCartBadge(); }
+function updateCartBadge() {
+  const total = cart.reduce((a,i) => a+i.qty, 0);
+  document.getElementById('cart-badge').textContent = total;
+}
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  const navEl = document.getElementById('nav-'+page);
+  if(navEl) navEl.classList.add('active');
+  window.scrollTo(0,0);
+
+  if(page==='cart') renderCart();
+  if(page==='billing') renderBilling();
+  if(page==='products') renderProductsPage();
+  if(page==='home') renderHomeProducts();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ============ PRODUCTS ============
+function productCard(p, small=false) {
+  const badgeHtml = p.badge ? `<div class="product-badge">${p.badge}</div>` : '';
+  const origHtml = p.orig ? `<span class="product-price-orig">₹${p.orig.toLocaleString()}</span>` : '';
+  return `
+    <div class="product-card">
+      <div class="product-img">
+        ${badgeHtml}
+        <span style="font-size:${small?'3rem':'4.5rem'}">${p.emoji}</span>
+        <button class="product-add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">${p.cat}</div>
+        <div class="product-name">${p.name}</div>
+        <div style="font-size:0.7rem;color:var(--warm-gray);margin-bottom:0.5rem">${p.desc}</div>
+        <div><span class="product-price">₹${p.price.toLocaleString()}</span>${origHtml}</div>
+      </div>
+    </div>`;
+}
+
+function renderHomeProducts() {
+  const el = document.getElementById('home-products');
+  if(el) el.innerHTML = PRODUCTS.slice(0,4).map(p => productCard(p,true)).join('');
+}
+
+let currentFilter = 'all';
+function renderProductsPage() {
+  const filtered = currentFilter==='all' ? PRODUCTS : PRODUCTS.filter(p => p.cat===currentFilter || (currentFilter==='sale' && p.badge==='Sale'));
+  document.getElementById('products-grid').innerHTML = filtered.map(p => productCard(p)).join('');
+}
+
+function filterProducts(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProductsPage();
+}
+
+function addToCart(id) {
+  const prod = PRODUCTS.find(p => p.id===id);
+  const existing = cart.find(i => i.id===id);
+  if(existing) existing.qty++;
+  else cart.push({...prod, qty:1});
+  saveCart();
+  showToast(`✦ ${prod.name} added to cart`);
+}
+
+// ============ CART ============
+function renderCart() {
+  const el = document.getElementById('cart-content');
+  if(!cart.length) {
+    el.innerHTML = `<div class="empty-cart"><div class="icon">🛍️</div><h3>Your cart is empty</h3><p>Looks like you haven't added anything yet.</p><button class="btn-primary" onclick="showPage('products')">Shop Now →</button></div>`;
+    return;
+  }
+  const subtotal = cart.reduce((a,i) => a + i.price*i.qty, 0);
+  const shipping = subtotal >= 5000 ? 0 : 299;
+  const discount = 0;
+  const total = subtotal + shipping - discount;
+
+  const itemsHtml = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-img"><span style="font-size:2.5rem">${item.emoji}</span></div>
+      <div class="cart-item-info">
+        <h4>${item.name}</h4>
+        <p>${item.desc} · ${item.cat}</p>
+        <div class="price">₹${item.price.toLocaleString()}</div>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+          <span style="font-size:0.72rem;color:var(--warm-gray);margin-left:0.5rem">Subtotal: ₹${(item.price*item.qty).toLocaleString()}</span>
+        </div>
+      </div>
+      <button class="remove-btn" onclick="removeFromCart(${item.id})">✕</button>
+    </div>`).join('');
+
+  el.innerHTML = `
+    <div class="cart-layout">
+      <div class="cart-items">${itemsHtml}</div>
+      <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <div class="summary-row"><span>Subtotal (${cart.reduce((a,i)=>a+i.qty,0)} items)</span><span>₹${subtotal.toLocaleString()}</span></div>
+        <div class="summary-row"><span>Shipping</span><span>${shipping===0?'<span style="color:#7ed56f">FREE</span>':'₹'+shipping}</span></div>
+        <div class="summary-row"><span>Discount</span><span>−₹${discount}</span></div>
+        <div class="summary-row total"><span>Total</span><span>₹${total.toLocaleString()}</span></div>
+        <div class="promo-row">
+          <input class="promo-input" placeholder="Promo code" id="promo-input">
+          <button class="promo-btn" onclick="applyPromo()">Apply</button>
+        </div>
+        <button class="btn-primary btn-full" onclick="showPage('billing')" style="margin-top:1rem">Proceed to Checkout →</button>
+        <button class="btn-outline btn-full" onclick="showPage('products')" style="margin-top:0.8rem;font-family:'Montserrat',sans-serif">Continue Shopping</button>
+      </div>
+    </div>`;
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id===id);
+  if(item) { item.qty += delta; if(item.qty<=0) cart = cart.filter(i => i.id!==id); }
+  saveCart(); renderCart();
+}
+function removeFromCart(id) { cart = cart.filter(i => i.id!==id); saveCart(); renderCart(); }
+function applyPromo() {
+  const code = document.getElementById('promo-input').value.trim().toUpperCase();
+  if(code==='NoorVAstra15') showToast('✦ Promo code applied — 15% off!');
+  else showToast('Invalid promo code');
+}
+
+// ============ BILLING ============
+function renderBilling() {
+  const el = document.getElementById('billing-content');
+  if(!cart.length) { el.innerHTML='<div style="padding:4rem;text-align:center"><h2 style="font-family:\'Cormorant Garamond\',serif">Your cart is empty</h2><br><button class="btn-primary" onclick="showPage(\'products\')">Shop Now →</button></div>'; return; }
+  const subtotal = cart.reduce((a,i) => a+i.price*i.qty, 0);
+  const shipping = subtotal>=5000 ? 0 : 299;
+  const gst = Math.round(subtotal*0.18);
+  const total = subtotal + shipping + gst;
+
+  const orderItems = cart.map(i => `<div class="order-item"><span>${i.emoji} ${i.name} × ${i.qty}</span><span>₹${(i.price*i.qty).toLocaleString()}</span></div>`).join('');
+
+  el.innerHTML = `
+    <h2>Checkout</h2>
+    <div class="billing-steps">
+      <div class="step active"><div class="step-num">1</div>Shipping</div>
+      <div class="step-line"></div>
+      <div class="step"><div class="step-num">2</div>Payment</div>
+      <div class="step-line"></div>
+      <div class="step"><div class="step-num">3</div>Review</div>
+    </div>
+    <div class="billing-layout">
+      <div>
+        <div class="billing-section">
+          <h3>Shipping Address</h3>
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" id="bill-fname" placeholder="Priyanka" value="${currentUser.fname||''}"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" id="bill-lname" placeholder="Kadam" value="${currentUser.lname||''}"></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" id="bill-email" placeholder="your@email.com" value="${currentUser.email||''}"></div>
+          <div class="form-group"><label>Phone</label><input type="tel" id="bill-phone" placeholder="+91 98765 43210"></div>
+          <div class="form-group"><label>Address Line 1</label><input type="text" id="bill-addr1" placeholder="House/Flat no., Street name"></div>
+          <div class="form-group"><label>Address Line 2</label><input type="text" id="bill-addr2" placeholder="Area, Landmark (optional)"></div>
+          <div class="form-row">
+            <div class="form-group"><label>City</label><input type="text" id="bill-city" placeholder="Ahmedabad"></div>
+            <div class="form-group"><label>State</label><input type="text" id="bill-state" placeholder="Gujarat"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>PIN Code</label><input type="text" id="bill-pin" placeholder="382475"></div>
+            <div class="form-group"><label>Country</label><input type="text" value="India" readonly style="background:#f5f5f5"></div>
+          </div>
+        </div>
+        <div class="billing-section">
+          <h3>Payment Method</h3>
+          <div class="payment-options">
+            <div class="pay-opt selected" onclick="selectPay(this)"><div class="pay-icon">💳</div>Card</div>
+            <div class="pay-opt" onclick="selectPay(this)"><div class="pay-icon">📱</div>UPI</div>
+            <div class="pay-opt" onclick="selectPay(this)"><div class="pay-icon">🏦</div>Net Banking</div>
+            <div class="pay-opt" onclick="selectPay(this)"><div class="pay-icon">💵</div>COD</div>
+          </div>
+          <div class="form-group"><label>Card Number</label><input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"></div>
+          <div class="form-row">
+            <div class="form-group"><label>Expiry Date</label><input type="text" placeholder="MM / YY" maxlength="7"></div>
+            <div class="form-group"><label>CVV</label><input type="text" placeholder="123" maxlength="3"></div>
+          </div>
+          <div class="form-group"><label>Name on Card</label><input type="text" placeholder="As printed on card"></div>
+        </div>
+        <button class="btn-primary" style="padding:1.2rem 3rem" onclick="placeOrder()">Place Order & Pay ₹${total.toLocaleString()} →</button>
+      </div>
+      <div class="order-summary-box">
+        <h3>Order Summary</h3>
+        ${orderItems}
+        <div class="bill-breakdown">
+          <div class="bill-row"><span>Subtotal</span><span>₹${subtotal.toLocaleString()}</span></div>
+          <div class="bill-row"><span>Shipping</span><span>${shipping===0?'FREE':'₹'+shipping}</span></div>
+          <div class="bill-row tax"><span>GST (18%)</span><span>+₹${gst.toLocaleString()}</span></div>
+          <div class="bill-row grand-total"><span>Total Payable</span><span>₹${total.toLocaleString()}</span></div>
+        </div>
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.1)">
+          <p style="font-size:0.68rem;color:rgba(255,255,255,0.4);line-height:1.7">🔒 Your payment is secured with 256-bit SSL encryption. We never store card details.</p>
+        </div>
+      </div>
+    </div>`;
+}
+
+function selectPay(el) {
+  document.querySelectorAll('.pay-opt').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function formatCard(el) {
+  let v = el.value.replace(/\D/g,'').substring(0,16);
+  el.value = v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+function placeOrder() {
+  const fname = document.getElementById('bill-fname')?.value;
+  const email = document.getElementById('bill-email')?.value;
+  const addr1 = document.getElementById('bill-addr1')?.value;
+  const city = document.getElementById('bill-city')?.value;
+  if(!fname||!email||!addr1||!city) { showToast('Please fill all required fields'); return; }
+  generateInvoice(fname, email, addr1, city);
+  cart = []; saveCart();
+  showPage('invoice');
+}
+
+function generateInvoice(name, email, addr, city) {
+  const subtotal = cart.length ? cart.reduce((a,i)=>a+i.price*i.qty,0) : window._lastOrder.subtotal;
+  const items = window._lastOrder ? window._lastOrder.items : [];
+  const invoiceNum = 'ME-' + Date.now().toString().slice(-8);
+  const date = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
+
+  // Store last order for invoice
+  const orderItems = JSON.parse(localStorage.getItem('me_last_order') || '[]');
+  const sub = orderItems.reduce ? orderItems.reduce((a,i)=>a+i.price*i.qty,0) : 0;
+  const gst = Math.round(sub*0.18);
+  const ship = sub>=5000?0:299;
+  const total = sub+gst+ship;
+
+  const rowsHtml = orderItems.map(i => `
+    <tr>
+      <td>${i.emoji} ${i.name}</td>
+      <td>${i.desc||i.cat}</td>
+      <td style="text-align:center">${i.qty}</td>
+      <td style="text-align:right">₹${i.price.toLocaleString()}</td>
+      <td style="text-align:right">₹${(i.price*i.qty).toLocaleString()}</td>
+    </tr>`).join('');
+
+  document.getElementById('invoice-box').innerHTML = `
+    <div class="invoice-header">
+      <div>
+        <div class="invoice-logo">MAISON <span>ÉLITE</span></div>
+        <div style="font-size:0.72rem;color:var(--warm-gray);margin-top:0.5rem">42, Kala Ghoda, Fort<br>Mumbai, Maharashtra 400001<br>GSTIN: 27AAACM1234F1ZX</div>
+      </div>
+      <div class="invoice-meta">
+        <h2>INVOICE</h2>
+        <p>Invoice No: <strong>${invoiceNum}</strong></p>
+        <p>Date: ${date}</p>
+        <p>Status: <span style="color:#7ed56f;font-weight:600">PAID ✓</span></p>
+      </div>
+    </div>
+    <div class="invoice-info">
+      <div><h4>Bill To</h4><p><strong>${name}</strong><br>${email}<br>${addr}<br>${city}</p></div>
+      <div><h4>Delivery Details</h4><p>Standard Delivery<br>Expected: 5–7 business days<br>Order ref: ${invoiceNum}</p></div>
+    </div>
+    <table class="invoice-table">
+      <thead><tr><th>Item</th><th>Description</th><th style="text-align:center">Qty</th><th style="text-align:right">Unit Price</th><th style="text-align:right">Amount</th></tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+    <div class="invoice-totals">
+      <div class="inv-row"><span>Subtotal</span><span>₹${sub.toLocaleString()}</span></div>
+      <div class="inv-row"><span>Shipping</span><span>${ship===0?'FREE':'₹'+ship}</span></div>
+      <div class="inv-row"><span>GST (18%)</span><span>₹${gst.toLocaleString()}</span></div>
+      <div class="inv-row grand"><span>Total Paid</span><span>₹${total.toLocaleString()}</span></div>
+    </div>
+    <div class="invoice-footer">
+      <p>Thank you for shopping with Maison Élite. For any queries, reach us at <strong>support@maisonelite.in</strong> or +91 22 4567 8900.</p>
+      <p style="margin-top:0.5rem;color:var(--gold)">✦ &nbsp; Luxury in every thread &nbsp; ✦</p>
+    </div>`;
+}
+
+// ============ AUTH ============
+function doLogin() {
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-password').value;
+  if(!email||!pass) { showToast('Please enter email and password'); return; }
+  loggedIn = true;
+  currentUser = { email, fname: email.split('@')[0] };
+  localStorage.setItem('me_loggedin', JSON.stringify(true));
+  localStorage.setItem('me_user', JSON.stringify(currentUser));
+  document.getElementById('auth-btn').textContent = '👤✓';
+  showToast('✦ Welcome back, ' + currentUser.fname + '!');
+  showPage('home');
+}
+
+function doRegister() {
+  showToast('✦ Account created! Welcome to Maison Élite.');
+  showPage('login');
+}
+
+// ============ INIT ============
+function init() {
+  updateCartBadge();
+  renderHomeProducts();
+  // intercept billing to save cart snapshot
+  const origShowPage = showPage;
+  window._showPage = showPage;
+}
+
+// Save cart snapshot before going to billing
+const _origShowPage = showPage;
+function showPage(page) {
+  if(page==='billing' && cart.length) localStorage.setItem('me_last_order', JSON.stringify(cart));
+  if(page==='invoice') {
+    const lastOrder = JSON.parse(localStorage.getItem('me_last_order')||'[]');
+    const name = document.getElementById('bill-fname')?.value || 'Customer';
+    const email = document.getElementById('bill-email')?.value || '';
+    const addr = (document.getElementById('bill-addr1')?.value||'') + ' ' + (document.getElementById('bill-addr2')?.value||'');
+    const city = document.getElementById('bill-city')?.value || '';
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-invoice').classList.add('active');
+    window.scrollTo(0,0);
+
+    const sub = lastOrder.reduce((a,i)=>a+i.price*i.qty,0);
+    const gst = Math.round(sub*0.18);
+    const ship = sub>=5000?0:299;
+    const total = sub+gst+ship;
+    const invoiceNum = 'ME-'+Date.now().toString().slice(-8);
+    const date = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'long',year:'numeric'});
+    const rowsHtml = lastOrder.map(i=>`<tr><td>${i.emoji} ${i.name}</td><td>${i.desc||i.cat}</td><td style="text-align:center">${i.qty}</td><td style="text-align:right">₹${i.price.toLocaleString()}</td><td style="text-align:right">₹${(i.price*i.qty).toLocaleString()}</td></tr>`).join('');
+    document.getElementById('invoice-box').innerHTML = `
+      <div class="invoice-header">
+        <div><div class="invoice-logo">MAISON <span style="color:var(--gold)">ÉLITE</span></div><div style="font-size:0.72rem;color:var(--warm-gray);margin-top:0.5rem">42, Kala Ghoda, Fort<br>Mumbai, Maharashtra 400001<br>GSTIN: 27AAACM1234F1ZX</div></div>
+        <div class="invoice-meta"><h2>INVOICE</h2><p>Invoice No: <strong>${invoiceNum}</strong></p><p>Date: ${date}</p><p>Status: <span style="color:#7ed56f;font-weight:600">PAID ✓</span></p></div>
+      </div>
+      <div class="invoice-info">
+        <div><h4>Bill To</h4><p><strong>${name}</strong><br>${email}<br>${addr}<br>${city}</p></div>
+        <div><h4>Delivery Details</h4><p>Standard Delivery<br>Expected: 5–7 business days<br>Order ref: ${invoiceNum}</p></div>
+      </div>
+      <table class="invoice-table">
+        <thead><tr><th>Item</th><th>Description</th><th style="text-align:center">Qty</th><th style="text-align:right">Unit Price</th><th style="text-align:right">Amount</th></tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+      <div class="invoice-totals">
+        <div class="inv-row"><span>Subtotal</span><span>₹${sub.toLocaleString()}</span></div>
+        <div class="inv-row"><span>Shipping</span><span>${ship===0?'FREE':'₹'+ship}</span></div>
+        <div class="inv-row"><span>GST (18%)</span><span>₹${gst.toLocaleString()}</span></div>
+        <div class="inv-row grand"><span>Total Paid</span><span>₹${total.toLocaleString()}</span></div>
+      </div>
+      <div class="invoice-footer"><p>Thank you for shopping with Maison Élite. For queries: <strong>support@maisonelite.in</strong> | +91 22 4567 8900</p><p style="margin-top:0.5rem;color:var(--gold)">✦ &nbsp; Luxury in every thread &nbsp; ✦</p></div>`;
+    return;
+  }
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  const navEl = document.getElementById('nav-'+page);
+  if(navEl) navEl.classList.add('active');
+  window.scrollTo(0,0);
+  if(page==='cart') renderCart();
+  if(page==='billing') { localStorage.setItem('me_last_order', JSON.stringify(cart)); renderBilling(); }
+  if(page==='products') renderProductsPage();
+  if(page==='home') renderHomeProducts();
+}
+
+function placeOrder() {
+  const fname = document.getElementById('bill-fname')?.value;
+  const email = document.getElementById('bill-email')?.value;
+  const addr1 = document.getElementById('bill-addr1')?.value;
+  const city = document.getElementById('bill-city')?.value;
+  if(!fname||!email||!addr1||!city) { showToast('Please fill all required fields'); return; }
+  cart = []; saveCart();
+  showPage('invoice');
+}
+
+init();
+</script>
+</body>
+</html>
