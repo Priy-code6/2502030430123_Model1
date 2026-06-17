@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCare Services</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">CampusCare</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="services.html">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="campus-life.html">Campus Life</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" style="min-height: 55vh; padding-top: 8rem;">
+      <div class="container hero-content text-center">
+        <p class="text-uppercase text-secondary small mb-3">Discover our tools</p>
+        <h1 class="hero-title">Services for a happier, healthier campus day.</h1>
+        <p class="hero-text">Use CampusCare’s built-in tools to stay on top of health, plan finances, and access safety resources.</p>
+      </div>
+    </section>
+
+    <section class="section-group section-light">
+      <div class="container">
+        <div class="text-center section-heading">
+          <h2>Built-in student services</h2>
+          <p class="text-muted mx-auto" style="max-width: 700px;">From tracking your cycle to managing daily expenses, CampusCare keeps your routines organized and stress-free.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="tool-card card p-4 h-100">
+              <div class="card-icon mb-3">🌸</div>
+              <h3 class="card-title">Period Tracker</h3>
+              <p class="card-text">Add your last date and cycle length to estimate your next period with one click.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="tool-card card p-4 h-100">
+              <div class="card-icon mb-3">💰</div>
+              <h3 class="card-title">Expense Tracker</h3>
+              <p class="card-text">Record expenses as you go and watch your total budget update in real time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-group section-soft">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5">
+            <div class="tracker-card card p-4">
+              <h3>Period Calculator</h3>
+              <div class="mb-3">
+                <label for="lastPeriodDateServices" class="form-label">Last Period Date</label>
+                <input type="date" id="lastPeriodDateServices" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="cycleLengthServices" class="form-label">Cycle Length (days)</label>
+                <input type="number" id="cycleLengthServices" class="form-control" value="28" min="20" max="45">
+              </div>
+              <button class="btn btn-primary w-100" onclick="calculateNextPeriodServices()">Calculate</button>
+              <div id="periodResultServices" class="result-box mt-4 d-none">
+                <p class="mb-1">Next period is expected on:</p>
+                <p id="nextPeriodDateServices" class="fw-bold fs-5"></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="tracker-card card p-4">
+              <h3>Expense Tracker</h3>
+              <div class="row g-2 mb-3">
+                <div class="col-7">
+                  <input type="text" id="expenseNameServices" class="form-control" placeholder="Item name">
+                </div>
+                <div class="col-3">
+                  <input type="number" id="expenseAmountServices" class="form-control" placeholder="Amount" min="0">
+                </div>
+                <div class="col-2">
+                  <button class="btn btn-secondary w-100" onclick="addExpenseServices()">Add</button>
+                </div>
+              </div>
+              <div id="expenseListServices"></div>
+              <hr>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">Total expenses</span>
+                <span class="fw-bold">₹<span id="totalAmountServices">0.00</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-group section-light">
+      <div class="container text-center">
+        <h2>More campus support</h2>
+        <div class="row g-4 mt-4">
+          <div class="col-md-4">
+            <div class="card p-4 h-100">
+              <div class="card-icon mb-3">🚨</div>
+              <h3 class="card-title">Emergency resources</h3>
+              <p class="card-text">Get campus guard and medical center details quickly whenever you need them.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card p-4 h-100">
+              <div class="card-icon mb-3">🍎</div>
+              <h3 class="card-title">Healthy habits</h3>
+              <p class="card-text">Use small wellness reminders to build a stronger daily routine at school.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card p-4 h-100">
+              <div class="card-icon mb-3">📅</div>
+              <h3 class="card-title">Event planning</h3>
+              <p class="card-text">Stay ready for campus activities with a simple overview of important dates.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container text-center">
+      <p class="mb-1">© 2026 CampusCare. Page 2 of 3.</p>
+      <a href="campus-life.html" class="text-white">See Campus Life</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="scripts.js"></script>
+  <script>
+    function calculateNextPeriodServices() {
+      const lastDate = document.getElementById('lastPeriodDateServices').value;
+      const cycle = parseInt(document.getElementById('cycleLengthServices').value, 10) || 28;
+      const resultBox = document.getElementById('periodResultServices');
+      const resultText = document.getElementById('nextPeriodDateServices');
+
+      if (!lastDate) {
+        alert('Please select your last period date.');
+        return;
+      }
+
+      const date = new Date(lastDate);
+      date.setDate(date.getDate() + cycle);
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      resultText.textContent = date.toLocaleDateString('en-US', options);
+      resultBox.classList.remove('d-none');
+    }
+
+    let expensesServices = [];
+
+    function addExpenseServices() {
+      const nameEl = document.getElementById('expenseNameServices');
+      const amountEl = document.getElementById('expenseAmountServices');
+      const name = nameEl.value.trim();
+      const amount = parseFloat(amountEl.value);
+
+      if (!name || isNaN(amount) || amount <= 0) {
+        alert('Enter a valid item name and amount.');
+        return;
+      }
+
+      expensesServices.push({ id: Date.now(), name, amount });
+      nameEl.value = '';
+      amountEl.value = '';
+      renderExpensesServices();
+    }
+
+    function deleteExpenseServices(id) {
+      expensesServices = expensesServices.filter(item => item.id !== id);
+      renderExpensesServices();
+    }
+
+    function renderExpensesServices() {
+      const list = document.getElementById('expenseListServices');
+      const total = document.getElementById('totalAmountServices');
+      list.innerHTML = '';
+      let sum = 0;
+
+      expensesServices.forEach(exp => {
+        sum += exp.amount;
+        const item = document.createElement('div');
+        item.className = 'expense-item';
+        item.innerHTML = `
+          <span>${exp.name}</span>
+          <span class="fw-bold">₹${exp.amount.toFixed(2)}</span>
+          <button class="btn btn-sm btn-danger" onclick="deleteExpenseServices(${exp.id})">Delete</button>
+        `;
+        list.appendChild(item);
+      });
+
+      total.textContent = sum.toFixed(2);
+    }
+  </script>
+</body>
+</html>

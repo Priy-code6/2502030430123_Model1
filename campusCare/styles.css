@@ -1,0 +1,196 @@
+/* Shared CampusCare site styles */
+:root {
+  --brand-primary: #6c5ce7;
+  --brand-secondary: #fd79a8;
+  --brand-soft: #f4f3ff;
+  --text-dark: #1f1f39;
+  --bg-light: #fcfcff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text-dark);
+  background: var(--bg-light);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.navbar {
+  padding: 1rem 1rem;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: var(--brand-primary) !important;
+}
+
+.nav-link {
+  color: #575767 !important;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--brand-primary) !important;
+}
+
+.hero {
+  min-height: 80vh;
+  display: grid;
+  place-items: center;
+  padding: 6rem 1rem 4rem;
+  background-image: radial-gradient(circle at top left, rgba(108, 92, 231, 0.18), transparent 24%),
+                    radial-gradient(circle at bottom right, rgba(253, 121, 168, 0.25), transparent 22%),
+                    linear-gradient(180deg, #ffffff 0%, #f8f8ff 100%);
+}
+
+.hero-content {
+  max-width: 760px;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  margin-bottom: 1rem;
+  letter-spacing: -0.04em;
+}
+
+.hero-text {
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+  color: #4d4d6a;
+}
+
+.btn-primary, .btn-secondary {
+  border-radius: 999px;
+}
+
+.btn-primary {
+  background: var(--brand-primary);
+  border: none;
+}
+
+.btn-secondary {
+  background: var(--brand-secondary);
+  border: none;
+}
+
+.section-heading {
+  margin-bottom: 1.5rem;
+}
+
+.feature-card,
+.tool-card,
+.contact-card,
+.tracker-card,
+.info-card {
+  border: none;
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgb(72 63 158 / 8%);
+}
+
+.feature-card {
+  min-height: 255px;
+}
+
+.section-light {
+  background: #ffffff;
+}
+
+.section-soft {
+  background: #faf8ff;
+}
+
+.card-icon {
+  width: 3.2rem;
+  height: 3.2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(108, 92, 231, 0.12);
+  font-size: 1.4rem;
+}
+
+.card-title {
+  margin-top: 1rem;
+  font-weight: 700;
+}
+
+.card-text {
+  color: #5e5e7b;
+}
+
+.section-group {
+  padding: 4rem 0;
+}
+
+.overlap-section {
+  margin-top: -4rem;
+}
+
+.tracker-card {
+  padding: 2rem;
+}
+
+.tracker-card label {
+  font-weight: 600;
+}
+
+.result-box {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border-radius: 18px;
+  border: 1px dashed rgba(108, 92, 231, 0.18);
+  background: #ffffff;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  background: #faf8ff;
+  margin-bottom: 0.75rem;
+}
+
+footer {
+  padding: 2rem 0;
+  background: #1f1f39;
+  color: #e6e6ff;
+}
+
+footer a {
+  color: #d3d3ff;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 5rem;
+  }
+
+  .tracker-card,
+  .contact-card,
+  .info-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-nav {
+    text-align: center;
+  }
+}
